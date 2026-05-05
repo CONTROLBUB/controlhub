@@ -1,84 +1,149 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ControlHub | Gestão Inteligente de Frotas</title>
-  <meta name="description" content="ControlHub: gestão inteligente de frotas com controle de revisões, documentos, tacógrafo, agendamentos, custos e relatórios." />
-  <meta name="google-site-verification" content="UUo93EaCObUXhanzqhtupVhhdWckwcaM4xmKcag0-WI" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <style>
-    :root{
-      --bg:#071015; --bg2:#0b141c; --card:#101b24; --card2:#132431; --text:#f3f8fb; --muted:#9eb2c1;
-      --teal:#10d1c5; --teal2:#078b87; --green:#2ecc71; --yellow:#f5b041; --red:#e74c3c; --blue:#3aa8ff; --purple:#9b59ff;
-      --line:rgba(255,255,255,.10); --shadow:0 24px 80px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);overflow-x:hidden}
-    a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;border-radius:14px;font-weight:800;border:1px solid var(--line);transition:.2s}
-    .btn.primary{background:linear-gradient(135deg,var(--teal),#0aa06f);color:#041014;box-shadow:0 12px 30px rgba(16,209,197,.22)}
-    .btn.dark{background:rgba(255,255,255,.06)}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
-    header{position:sticky;top:0;z-index:20;background:rgba(7,16,21,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-    nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.4px}
-    .mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;border:1px solid rgba(16,209,197,.55);background:radial-gradient(circle at 35% 35%,rgba(16,209,197,.35),transparent 55%),#061016;color:var(--teal);font-size:26px;font-weight:900}
-    .brand span small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.8px;margin-top:2px}.navlinks{display:flex;gap:24px;color:#d9e7ee;font-size:14px}.hamb{display:none}
-    .hero{position:relative;padding:82px 0 55px;background:radial-gradient(circle at 15% 20%,rgba(16,209,197,.14),transparent 32%),linear-gradient(135deg,#071015,#091823 65%,#051013)}
-    .hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 85%);pointer-events:none}
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(16,209,197,.35);border-radius:999px;color:#bdfdf7;background:rgba(16,209,197,.08);font-size:13px;font-weight:700;margin-bottom:20px}
-    h1{font-size:clamp(38px,6vw,72px);line-height:.96;letter-spacing:-2.5px;margin-bottom:22px}h1 b{color:var(--teal)}
-    .lead{font-size:19px;line-height:1.6;color:#c1d1dc;max-width:620px;margin-bottom:30px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap}.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:32px;color:#cfe3ed;font-size:14px}.trust div{display:flex;gap:8px;align-items:center}.check{color:var(--teal);font-weight:900}
-    .truck-card{position:relative;border-radius:28px;padding:22px;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}.truck-card:before{content:"";position:absolute;right:-60px;top:-20px;width:310px;height:310px;border-radius:50%;border:2px solid rgba(16,209,197,.22)}
-    .truck-visual{height:360px;border-radius:22px;background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.22)),url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80') center/cover;display:flex;align-items:flex-end;padding:24px;position:relative}.truck-visual p{font-weight:900;font-size:26px;max-width:370px}.mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.mini{background:rgba(8,18,25,.92);border:1px solid var(--line);border-radius:16px;padding:14px}.mini strong{display:block;font-size:24px}.mini span{font-size:12px;color:var(--muted)}
-    section{padding:72px 0}.section-head{text-align:center;margin-bottom:34px}.section-head h2{font-size:clamp(30px,4vw,46px);letter-spacing:-1.2px}.section-head p{color:var(--muted);margin:14px auto 0;max-width:730px;line-height:1.55}
-    .problems{display:grid;grid-template-columns:1fr 80px 1fr;gap:24px;align-items:center}.panel{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 18px 50px rgba(0,0,0,.22)}.panel h3{font-size:24px;margin-bottom:18px}.panel.problem h3{color:#ff6b63}.panel.solution h3{color:var(--teal)}.list{display:grid;gap:12px}.list li{list-style:none;padding:13px 14px;border-radius:14px;background:rgba(255,255,255,.045);color:#dce8ee}.arrow{height:58px;width:58px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--teal),var(--blue));font-size:30px;margin:auto;color:#001014}
-    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.feature{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;min-height:170px}.ico{height:44px;width:44px;border-radius:14px;display:grid;place-items:center;background:rgba(16,209,197,.12);color:var(--teal);font-size:23px;margin-bottom:14px}.feature h3{font-size:17px;margin-bottom:8px}.feature p{color:var(--muted);font-size:14px;line-height:1.5}
-    .demo-wrap{background:#eef3f5;color:#101820;border-radius:34px;padding:22px;box-shadow:var(--shadow)}.app{display:grid;grid-template-columns:230px 1fr;min-height:720px;background:#f7fafb;border-radius:26px;overflow:hidden;border:1px solid #dce5e9}.sidebar{background:#08131b;color:#eef8fb;padding:24px;display:flex;flex-direction:column}.side-logo{display:flex;gap:10px;align-items:center;font-weight:900;margin-bottom:28px}.menu{display:grid;gap:8px}.menu button{cursor:pointer;color:#dce9ef;background:transparent;border:0;text-align:left;padding:13px 12px;border-radius:12px;font-weight:700}.menu button.active,.menu button:hover{background:linear-gradient(135deg,#0dbf8c,#108a55);color:#fff}.side-foot{margin-top:auto;color:#7f98a8;font-size:12px}.main{padding:26px;overflow:hidden}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.topbar h2{font-size:28px}.user{display:flex;align-items:center;gap:10px;color:#536674;font-weight:700}.avatar{height:38px;width:38px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#0a7b84)}
-    .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px}.kpi{background:#fff;border:1px solid #dfe7eb;border-radius:18px;padding:17px;box-shadow:0 10px 24px rgba(7,16,21,.08)}.kpi b{display:block;font-size:28px;margin:8px 0 2px}.kpi small{color:#60717c;text-transform:uppercase;font-weight:800;font-size:11px}.dot{height:42px;width:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900}.red{background:var(--red)}.yellow{background:#ff9700}.green{background:var(--green)}.purple{background:var(--purple)}.cyan{background:#00aca9}
-    .grid-app{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card-light{background:#fff;border:1px solid #dfe7eb;border-radius:18px;padding:18px;box-shadow:0 10px 24px rgba(7,16,21,.08)}.card-light h3{margin-bottom:14px}.donut{height:190px;width:190px;border-radius:50%;background:conic-gradient(var(--red) 0 12%,#ff9700 12% 33%,var(--green) 33% 84%,#9ba8b0 84%);display:grid;place-items:center;margin:auto}.donut div{height:104px;width:104px;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:900}.alerts{display:grid;gap:12px}.alert{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:13px;background:#f5f8fa;color:#26343d}.alert span{color:#6d7f8a;font-size:12px}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:13px 10px;text-align:left;border-bottom:1px solid #e4ecef}.table th{color:#667984;text-transform:uppercase;font-size:11px}.badge{padding:5px 9px;border-radius:999px;font-weight:900;font-size:11px}.b-red{background:#ffe3e1;color:#d63128}.b-yellow{background:#fff0d4;color:#b86e00}.b-green{background:#ddf8e9;color:#137a3d}.tabs{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}.tabs span{padding:8px 12px;border-radius:999px;background:#eef4f5;font-size:12px;font-weight:800}.tabs span.active{background:#22b85d;color:white}.split3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}.money{font-size:27px;font-weight:900;color:#0c202c}.page{display:none}.page.active{display:block}
-    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.price{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px}.price.featured{border-color:rgba(16,209,197,.65);box-shadow:0 0 0 1px rgba(16,209,197,.25),0 20px 70px rgba(16,209,197,.10)}.price h3{font-size:22px}.price .amount{font-size:34px;font-weight:900;margin:18px 0}.price ul{display:grid;gap:10px;color:#d3e2ea}.price li{list-style:none}.cta{padding:70px 0;background:linear-gradient(135deg,#07383a,#0b151e)}.cta-box{display:flex;justify-content:space-between;gap:20px;align-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:28px;padding:34px}.cta h2{font-size:36px}.cta p{color:#c3d4dd;margin-top:8px}
-    footer{padding:30px 0;border-top:1px solid var(--line);color:#9eb2c1;background:#050b0f}.footer-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.wpp{position:fixed;right:18px;bottom:18px;z-index:30;height:58px;width:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;color:white;font-size:28px;box-shadow:0 16px 35px rgba(0,0,0,.35)}
-    @media(max-width:980px){.navlinks{display:none}.hamb{display:block}.hero-grid,.problems{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}.features,.pricing{grid-template-columns:1fr 1fr}.app{grid-template-columns:1fr}.sidebar{display:none}.kpis{grid-template-columns:1fr 1fr}.grid-app,.split3{grid-template-columns:1fr}.truck-visual{height:300px}.cta-box{flex-direction:column;align-items:flex-start}}
-    @media(max-width:620px){nav{height:68px}.brand span{font-size:14px}.hero{padding-top:52px}h1{letter-spacing:-1.5px}.lead{font-size:16px}.hero-actions .btn{width:100%}.features,.pricing,.kpis{grid-template-columns:1fr}.app{min-height:auto}.main{padding:16px}.demo-wrap{padding:10px;border-radius:22px}.truck-card{padding:12px;border-radius:20px}.mini-metrics{grid-template-columns:1fr}.table{font-size:11px}.table th,.table td{padding:10px 6px}.hide-mobile{display:none}.topbar{align-items:flex-start;gap:12px;flex-direction:column}.cta h2{font-size:28px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ControlHub | Gestão Inteligente de Frotas</title>
+
+<meta name="description" content="Sistema de gestão de frotas com controle de revisões, documentos, tacógrafo, agendamentos e custos.">
+
+<!-- FAVICON -->
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:#071015;
+  color:white;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+}
+
+header img {
+  height:45px;
+}
+
+.buttons {
+  display:flex;
+  gap:10px;
+}
+
+.btn {
+  background:#25D366;
+  padding:10px 18px;
+  border-radius:8px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.insta {
+  background:#E1306C;
+  padding:10px 18px;
+  border-radius:8px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.hero {
+  padding:80px 40px;
+}
+
+.hero h1 {
+  font-size:42px;
+}
+
+.boxes {
+  display:flex;
+  gap:30px;
+  padding:40px;
+}
+
+.box {
+  flex:1;
+  background:#0c2433;
+  padding:25px;
+  border-radius:12px;
+}
+
+.section {
+  padding:60px 40px;
+}
+
+.cards {
+  display:flex;
+  gap:20px;
+}
+
+.card {
+  flex:1;
+  background:#0c2433;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.cta {
+  text-align:center;
+  padding:60px;
+}
+</style>
 </head>
+
 <body>
-  <a class="wpp" href="https://wa.me/5562999778224?text=Ol%C3%A1%2C%20quero%20ver%20uma%20demonstra%C3%A7%C3%A3o%20do%20ControlHub" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
-  <header>
-    <div class="container"><nav>
-      <a class="brand" href="#inicio"><img src="logo.png" alt="ControlHub" style="height:48px;width:48px;object-fit:cover;border-radius:12px;border:1px solid rgba(16,209,197,.35)"><span>CONTROL<b style="color:var(--teal)">HUB</b><small>GESTÃO INTELIGENTE DE FROTAS</small></span></a>
-      <div class="navlinks"><a href="#solucao">Solução</a><a href="#demo">Demo</a><a href="#recursos">Recursos</a><a href="#contato">Contato</a></div>
-      <a class="btn primary" href="https://wa.me/5562999778224?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20ControlHub" target="_blank">Falar no WhatsApp</a>
-    </nav></div>
-  </header>
-  <main>
-    <section class="hero" id="inicio"><div class="container hero-grid">
-      <div><div class="eyebrow">● Sistema + acompanhamento humano</div><h1>Controle total da sua <b>frota</b> em um só lugar.</h1><p class="lead">O ControlHub organiza revisões, documentos, tacógrafo, agendamentos, custos e relatórios para você evitar prejuízos antes que eles aconteçam.</p><div class="hero-actions"><a class="btn primary" href="#demo">Ver demonstração</a><a class="btn dark" href="https://wa.me/5562999778224" target="_blank">Chamar no WhatsApp</a></div><div class="trust"><div><span class="check">✓</span> Revisões e KM</div><div><span class="check">✓</span> CRLV e tacógrafo</div><div><span class="check">✓</span> Relatórios e custos</div></div></div>
-      <div class="truck-card"><div class="truck-visual"><p>Gestão visual, clara e focada na operação.</p></div><div class="mini-metrics"><div class="mini"><strong style="color:var(--red)">7</strong><span>Revisão imediata</span></div><div class="mini"><strong style="color:var(--yellow)">12</strong><span>Em atenção</span></div><div class="mini"><strong style="color:var(--green)">38</strong><span>Em conformidade</span></div></div></div>
-    </div></section>
-    <section id="solucao"><div class="container"><div class="section-head"><h2>Mais que sistema. Uma central de acompanhamento.</h2><p>Você não fica sozinho: organizamos os dados, acompanhamos riscos e ajudamos a programar ações antes do problema virar custo.</p></div><div class="problems"><div class="panel problem"><h3>O problema</h3><ul class="list"><li>Revisões atrasadas e manutenção corretiva</li><li>Documentos vencendo sem controle</li><li>KM desatualizado e informação espalhada</li><li>Gastos difíceis de acompanhar por veículo</li></ul></div><div class="arrow">→</div><div class="panel solution"><h3>A solução</h3><ul class="list"><li>Painel online com status da frota</li><li>Agendamentos e histórico de manutenção</li><li>CRLV e tacógrafo com visualizar, baixar e imprimir</li><li>Relatórios de custos e alertas inteligentes</li></ul></div></div></div></section>
-    <section id="recursos"><div class="container"><div class="section-head"><h2>Recursos principais</h2><p>Tudo que conversamos reunido em módulos claros para o cliente entender e usar.</p></div><div class="features"><div class="feature"><div class="ico">🚛</div><h3>Frota</h3><p>Placa, chassi, filial, KM atual, próxima revisão e status.</p></div><div class="feature"><div class="ico">📅</div><h3>Agendamentos</h3><p>Manutenções programadas, em andamento e finalizadas.</p></div><div class="feature"><div class="ico">🕘</div><h3>Histórico</h3><p>Serviços realizados, KM, fornecedor, observação e valores.</p></div><div class="feature"><div class="ico">📄</div><h3>Documentos</h3><p>CRLV e tacógrafo com opção para visualizar, baixar e imprimir.</p></div><div class="feature"><div class="ico">💰</div><h3>Custos</h3><p>Gasto mensal, custo por veículo e veículos mais caros.</p></div><div class="feature"><div class="ico">📊</div><h3>Relatórios</h3><p>Relatórios gerenciais para tomada de decisão.</p></div><div class="feature"><div class="ico">🔔</div><h3>Alertas</h3><p>Revisão, KM desatualizado, tacógrafo e documentos vencendo.</p></div><div class="feature"><div class="ico">🔐</div><h3>Área do cliente</h3><p>Cada cliente visualiza apenas as informações da própria frota.</p></div></div></div></section>
-    <section id="demo"><div class="container"><div class="section-head"><h2>Demonstração do sistema</h2><p>Clique no menu do painel abaixo para navegar entre os módulos do ControlHub.</p></div><div class="demo-wrap"><div class="app"><aside class="sidebar"><div class="side-logo"><img src="logo.png" alt="ControlHub" style="width:34px;height:34px;object-fit:cover;border-radius:9px">CONTROL<span style="color:var(--teal)">HUB</span></div><div class="menu"><button class="active" data-page="dash">Dashboard</button><button data-page="frota">Frota</button><button data-page="agenda">Agendamentos</button><button data-page="historico">Histórico</button><button data-page="docs">Documentos</button><button data-page="custos">Custos</button><button data-page="relatorios">Relatórios</button><button data-page="alertas">Alertas</button></div><div class="side-foot">Cliente: Empresa Exemplo<br>Operação monitorada</div></aside><div class="main"><div class="topbar"><div><h2 id="pageTitle">Dashboard</h2><p style="color:#687985">Visão geral da frota</p></div><div class="user"><div class="avatar"></div>Área do cliente</div></div>
-      <div class="page active" id="dash"><div class="kpis"><div class="kpi"><div class="dot red">!</div><small>Revisão imediata</small><b>7</b><span>veículos</span></div><div class="kpi"><div class="dot yellow">⚠</div><small>Em atenção</small><b>12</b><span>veículos</span></div><div class="kpi"><div class="dot green">✓</div><small>Em conformidade</small><b>38</b><span>veículos</span></div><div class="kpi"><div class="dot purple">⏱</div><small>Tacógrafo vencido</small><b>3</b><span>veículos</span></div><div class="kpi"><div class="dot cyan">📄</div><small>Documentos vencendo</small><b>5</b><span>veículos</span></div></div><div class="grid-app"><div class="card-light"><h3>Situação da frota</h3><div class="donut"><div>57<br><span style="font-size:12px;color:#71828b">veículos</span></div></div></div><div class="card-light"><h3>Alertas recentes</h3><div class="alerts"><div class="alert"><b>Revisão vencida</b><span>Hoje</span></div><div class="alert"><b>Tacógrafo vencido</b><span>Hoje</span></div><div class="alert"><b>KM desatualizado</b><span>2 dias</span></div></div></div></div><div class="card-light" style="margin-top:16px"><h3>Veículos em destaque</h3><table class="table"><thead><tr><th>Placa</th><th>Veículo</th><th>KM atual</th><th>Próxima revisão</th><th>Situação</th><th class="hide-mobile">Tacógrafo</th></tr></thead><tbody><tr><td>ABC1D23</td><td>Volvo FH 540</td><td>128.500</td><td>125.000</td><td><span class="badge b-red">Imediata</span></td><td class="hide-mobile">Venceu há 15 dias</td></tr><tr><td>DEF4G56</td><td>Scania R450</td><td>95.200</td><td>92.000</td><td><span class="badge b-red">Imediata</span></td><td class="hide-mobile">Vence em 5 dias</td></tr><tr><td>GHI7J89</td><td>Actros</td><td>152.300</td><td>152.000</td><td><span class="badge b-yellow">Atenção</span></td><td class="hide-mobile">Válido</td></tr></tbody></table></div></div>
-      <div class="page" id="frota"><div class="card-light"><h3>Frota cadastrada</h3><table class="table"><thead><tr><th>Placa</th><th>Chassi</th><th>Filial</th><th>KM atual</th><th>Status</th></tr></thead><tbody><tr><td>ABC1D23</td><td>9BWZZZ...</td><td>Matriz</td><td>128.500</td><td><span class="badge b-red">Revisão imediata</span></td></tr><tr><td>DEF4G56</td><td>9BM123...</td><td>Filial 1</td><td>95.200</td><td><span class="badge b-yellow">Em atenção</span></td></tr><tr><td>NOP2Q34</td><td>9BV981...</td><td>Filial 2</td><td>101.800</td><td><span class="badge b-green">OK</span></td></tr></tbody></table></div></div>
-      <div class="page" id="agenda"><div class="card-light"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3>Agendamentos</h3><span class="badge b-green">Novo agendamento</span></div><div class="tabs"><span class="active">Próximos (5)</span><span>Em andamento (2)</span><span>Finalizados (3)</span></div><table class="table"><thead><tr><th>Data</th><th>Veículo</th><th>Serviço</th><th>Local</th><th>Status</th></tr></thead><tbody><tr><td>10/05/2025</td><td>ABC1D23</td><td>Revisão preventiva</td><td>Oficina matriz</td><td><span class="badge b-yellow">Agendado</span></td></tr><tr><td>12/05/2025</td><td>DEF4G56</td><td>Troca de óleo</td><td>Oficina matriz</td><td><span class="badge b-yellow">Agendado</span></td></tr><tr><td>14/05/2025</td><td>GHI7J89</td><td>Revisão preventiva</td><td>Filial 2</td><td><span class="badge b-green">Em andamento</span></td></tr></tbody></table></div></div>
-      <div class="page" id="historico"><div class="card-light"><h3>Histórico de manutenção</h3><table class="table"><thead><tr><th>Data</th><th>Placa</th><th>Serviço</th><th>KM</th><th>Fornecedor</th><th>Valor</th></tr></thead><tbody><tr><td>02/05/2025</td><td>JKL0M12</td><td>Sistema de freios</td><td>87.600</td><td>Oficina parceira</td><td>R$ 3.850,00</td></tr><tr><td>28/04/2025</td><td>NOP2Q34</td><td>Revisão preventiva</td><td>101.800</td><td>Concessionária</td><td>R$ 2.450,00</td></tr><tr><td>22/04/2025</td><td>ABC1D23</td><td>Diagnóstico</td><td>128.500</td><td>Oficina matriz</td><td>R$ 680,00</td></tr></tbody></table></div></div>
-      <div class="page" id="docs"><div class="card-light"><h3>Documentos — CRLV e Tacógrafo</h3><table class="table"><thead><tr><th>Placa</th><th>CRLV</th><th>Tacógrafo</th><th>Status</th><th>Ações</th></tr></thead><tbody><tr><td>ABC1D23</td><td>Válido</td><td>Venceu há 15 dias</td><td><span class="badge b-red">Crítico</span></td><td>Ver • Baixar • Imprimir</td></tr><tr><td>DEF4G56</td><td>Vence em 12 dias</td><td>Vence em 5 dias</td><td><span class="badge b-yellow">Atenção</span></td><td>Ver • Baixar • Imprimir</td></tr><tr><td>GHI7J89</td><td>Válido</td><td>Válido</td><td><span class="badge b-green">OK</span></td><td>Ver • Baixar • Imprimir</td></tr></tbody></table></div></div>
-      <div class="page" id="custos"><div class="split3"><div class="card-light"><h3>Gasto no mês</h3><div class="money">R$ 18.760,50</div><p style="color:#71828b">+12% em relação ao mês anterior</p></div><div class="card-light"><h3>Custo médio</h3><div class="money">R$ 329,13</div><p style="color:#71828b">por veículo</p></div><div class="card-light"><h3>Veículo mais caro</h3><div class="money">ABC1D23</div><p style="color:#71828b">R$ 4.530,00</p></div></div><div class="card-light" style="margin-top:16px"><h3>Custos por manutenção</h3><table class="table"><thead><tr><th>Placa</th><th>Peças</th><th>Mão de obra</th><th>Total</th></tr></thead><tbody><tr><td>ABC1D23</td><td>R$ 2.100,00</td><td>R$ 850,00</td><td>R$ 2.950,00</td></tr><tr><td>DEF4G56</td><td>R$ 950,00</td><td>R$ 500,00</td><td>R$ 1.450,00</td></tr></tbody></table></div></div>
-      <div class="page" id="relatorios"><div class="card-light"><h3>Relatórios disponíveis</h3><div class="alerts"><div class="alert"><b>Relatório mensal da frota</b><span>Gerar PDF</span></div><div class="alert"><b>Relatório de revisões vencidas</b><span>Gerar PDF</span></div><div class="alert"><b>Relatório de documentos e tacógrafo</b><span>Gerar PDF</span></div><div class="alert"><b>Relatório de custos por veículo</b><span>Gerar PDF</span></div></div></div></div>
-      <div class="page" id="alertas"><div class="card-light"><h3>Central de alertas</h3><div class="alerts"><div class="alert"><b>7 veículos precisam de revisão imediata</b><span>Crítico</span></div><div class="alert"><b>5 documentos vencem nos próximos 15 dias</b><span>Atenção</span></div><div class="alert"><b>8 veículos com KM desatualizado há mais de 7 dias</b><span>Atenção</span></div><div class="alert"><b>3 tacógrafos vencidos</b><span>Crítico</span></div></div></div></div>
-    </div></div></div></div></section>
-    <section id="contato"><div class="container"><div class="section-head"><h2>Conheça o ControlHub na prática</h2><p>Cada frota tem uma rotina diferente. Por isso, a demonstração é personalizada para mostrar como o sistema pode ajudar sua operação antes de falarmos sobre qualquer proposta.</p></div><div class="pricing"><div class="price"><h3>Diagnóstico da frota</h3><p>Entendemos sua operação, quantidade de veículos e principais pontos de atenção.</p><ul><li>✓ Revisões e KM</li><li>✓ Documentos e tacógrafo</li><li>✓ Custos e histórico</li></ul></div><div class="price featured"><h3>Demonstração guiada</h3><p>Mostramos o painel funcionando com os módulos mais importantes para sua empresa.</p><ul><li>✓ Dashboard</li><li>✓ Agendamentos</li><li>✓ Relatórios e alertas</li></ul></div><div class="price"><h3>Acompanhamento ativo</h3><p>Você não fica sozinho: ajudamos a acompanhar riscos e programar ações.</p><ul><li>✓ Alertas preventivos</li><li>✓ Organização dos dados</li><li>✓ Apoio na rotina da frota</li></ul></div><div class="price"><h3>Contato direto</h3><p>Fale comigo para entender qual formato se encaixa melhor na sua operação.</p><ul><li>✓ WhatsApp</li><li>✓ Instagram</li><li>✓ Atendimento consultivo</li></ul></div></div></div></section>
-    <section class="cta"><div class="container cta-box"><div><h2>Quer ver como funciona na sua frota?</h2><p>Fale comigo no WhatsApp e agende uma demonstração rápida do ControlHub.</p></div><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn primary" href="https://wa.me/5562999778224?text=Ol%C3%A1%2C%20quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20ControlHub" target="_blank">Chamar no WhatsApp</a><a class="btn dark" href="https://instagram.com/controlhub.frotas" target="_blank">Ver Instagram</a></div></div></section>
-  </main>
-  <footer><div class="container footer-grid"><div><b>CONTROL<span style="color:var(--teal)">HUB</span></b><br>Gestão Inteligente de Frotas</div><div>WhatsApp: (62) 99977-8224</div><div>© 2026 ControlHub. Todos os direitos reservados.</div></div></footer>
-  <script>
-    const buttons = document.querySelectorAll('.menu button');
-    const pages = document.querySelectorAll('.page');
-    const title = document.getElementById('pageTitle');
-    const names = {dash:'Dashboard',frota:'Frota',agenda:'Agendamentos',historico:'Histórico de Manutenção',docs:'Documentos',custos:'Custos',relatorios:'Relatórios',alertas:'Alertas'};
-    buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');pages.forEach(p=>p.classList.remove('active'));document.getElementById(btn.dataset.page).classList.add('active');title.textContent=names[btn.dataset.page]}));
-  </script>
+
+<header>
+  <img src="logo.png">
+
+  <div class="buttons">
+    <a href="https://wa.me/5562999778224" class="btn">WhatsApp</a>
+    <a href="https://instagram.com/controlhub.frotas" class="insta">Instagram</a>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Controle total da sua frota</h1>
+  <p>Gerencie revisões, documentos, custos e agendamentos em um só lugar.</p>
+</div>
+
+<div class="boxes">
+  <div class="box">
+    <h2 style="color:#ff6b6b;">Problema</h2>
+    <p>Revisões atrasadas</p>
+    <p>Documentos vencidos</p>
+    <p>Falta de controle</p>
+  </div>
+
+  <div class="box">
+    <h2 style="color:#00e0c6;">Solução</h2>
+    <p>Painel completo</p>
+    <p>Agendamentos</p>
+    <p>Relatórios</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Recursos</h2>
+
+  <div class="cards">
+    <div class="card">Frota</div>
+    <div class="card">Agendamentos</div>
+    <div class="card">Histórico</div>
+    <div class="card">Documentos</div>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>Quer ver funcionando?</h2>
+  <a href="https://wa.me/5562999778224" class="btn">Falar no WhatsApp</a>
+</div>
+
 </body>
 </html>
