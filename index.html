@@ -10,14 +10,13 @@
 
 <meta name="google-site-verification" content="UUo93EaCObUXhanzqhtupVhhdWckwcaM4xmKcag0-WI" />
 
-<!-- FAVICON -->
 <link rel="icon" type="image/png" href="favicon.png">
 
 <style>
 body {
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#06141f;
+  font-family: 'Segoe UI', Arial;
+  background: linear-gradient(180deg, #06141f 0%, #031019 100%);
   color:white;
 }
 
@@ -25,7 +24,7 @@ header {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 40px;
+  padding:20px 50px;
 }
 
 header img {
@@ -34,7 +33,7 @@ header img {
 
 .buttons {
   display:flex;
-  gap:10px;
+  gap:12px;
 }
 
 .btn {
@@ -44,6 +43,11 @@ header img {
   color:white;
   text-decoration:none;
   font-weight:bold;
+  transition:0.3s;
+}
+
+.btn:hover {
+  background:#1ebe5d;
 }
 
 .insta {
@@ -56,40 +60,48 @@ header img {
 }
 
 .hero {
-  padding:80px 40px;
+  padding:90px 60px 40px;
 }
 
 .hero h1 {
-  font-size:42px;
+  font-size:48px;
   margin-bottom:10px;
 }
 
 .hero p {
-  color:#ccc;
+  color:#9bb3c7;
+  font-size:18px;
 }
 
 .boxes {
   display:flex;
-  gap:30px;
-  padding:40px;
+  gap:40px;
+  padding:40px 60px;
+  align-items:center;
 }
 
 .box {
   flex:1;
-  background:#0c2433;
-  padding:25px;
-  border-radius:12px;
+  background:#0b2332;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+.box h2 {
+  margin-bottom:15px;
 }
 
 .arrow {
-  display:flex;
-  align-items:center;
-  justify-content:center;
   font-size:30px;
 }
 
 .section {
-  padding:60px 40px;
+  padding:60px;
+}
+
+.section h2 {
+  margin-bottom:20px;
 }
 
 .cards {
@@ -99,15 +111,30 @@ header img {
 
 .card {
   flex:1;
-  background:#0c2433;
-  padding:20px;
-  border-radius:10px;
+  background:#0b2332;
+  padding:25px;
+  border-radius:12px;
   text-align:center;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:translateY(-5px);
 }
 
 .cta {
   text-align:center;
-  padding:60px;
+  padding:80px 40px;
+}
+
+.cta h2 {
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.cta p {
+  color:#9bb3c7;
+  margin-bottom:20px;
 }
 </style>
 </head>
@@ -125,26 +152,26 @@ header img {
 
 <div class="hero">
   <h1>Mais que sistema. Uma central de acompanhamento.</h1>
-  <p>Você não fica sozinho: organizamos dados, acompanhamos riscos e evitamos prejuízos.</p>
+  <p>Você não fica sozinho: organizamos dados, acompanhamos riscos e evitamos prejuízos antes que aconteçam.</p>
 </div>
 
 <div class="boxes">
   <div class="box">
     <h2 style="color:#ff6b6b;">O problema</h2>
-    <p>Revisões atrasadas</p>
-    <p>Documentos vencidos</p>
-    <p>KM desatualizado</p>
-    <p>Custos desorganizados</p>
+    <p>Revisões atrasadas e manutenção corretiva</p>
+    <p>Documentos vencendo sem controle</p>
+    <p>KM desatualizado e dados espalhados</p>
+    <p>Custos difíceis de acompanhar</p>
   </div>
 
   <div class="arrow">→</div>
 
   <div class="box">
     <h2 style="color:#00e0c6;">A solução</h2>
-    <p>Painel online da frota</p>
-    <p>Agendamentos e histórico</p>
+    <p>Painel online com status da frota</p>
+    <p>Agendamentos e histórico completo</p>
     <p>CRLV e tacógrafo organizados</p>
-    <p>Relatórios e alertas</p>
+    <p>Relatórios e alertas inteligentes</p>
   </div>
 </div>
 
@@ -160,8 +187,8 @@ header img {
 </div>
 
 <div class="cta">
-  <h2>Quer ver como funciona?</h2>
-  <p>Fale comigo e veja na prática como aplicamos isso na sua empresa.</p>
+  <h2>Quer ver como funciona na prática?</h2>
+  <p>Fale comigo e veja como podemos aplicar isso na sua operação.</p>
 
   <a href="https://wa.me/5562999778224" class="btn">Falar no WhatsApp</a>
 </div>
